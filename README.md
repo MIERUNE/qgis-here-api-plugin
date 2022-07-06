@@ -11,9 +11,8 @@ QGIS Plugin for HERE API.
 ### Authentication
 
 -   Get an API Key from https://platform.here.com/
--   Select Plugin --> HERE API Plugin --> Config from the menu bar and enter your API Key.
-
-![](imgs/config.png)
+-   Select Plugin --> HERE API Plugin --> Config from the menu bar and enter your API Key.  
+    ![](imgs/config.png)
 
 ## Functions
 
