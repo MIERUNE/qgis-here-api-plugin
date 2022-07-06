@@ -10,8 +10,8 @@ icon=imgs/icon.png
 
 author=MIERUNE Inc.
 email=info@mierune.co.jp
-homepage=
-tracker=
-repository=
-tags=
+homepage=https://github.com/MIERUNE/qgis-here-api-plugin
+tracker=https://github.com/MIERUNE/qgis-here-api-plugin/issues
+repository=https://github.com/MIERUNE/qgis-here-api-plugin
+tags=python,here,routing,routematching
 category=
