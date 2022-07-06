@@ -73,5 +73,5 @@ class HereApiPlugin:
         self.dialog_main.exec_()
 
     def show_dialog_config(self):
-        self.sample_menu_02 = DialogConfig()
-        self.sample_menu_02.exec_()
+        self.dialog_config = DialogConfig()
+        self.dialog_config.exec_()
