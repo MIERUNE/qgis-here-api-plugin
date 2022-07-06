@@ -10,8 +10,8 @@ QGIS Plugin for HERE API.
 
 ### Authentication
 
--   Get an API Key from https://platform.here.com/
--   Select Plugin --> HERE Route API Plugin --> Config from the menu bar and enter your API Key.  
+-   Get API Key from https://platform.here.com/
+-   From the menu bar, select Plugin -> HERE Route API Plugin -> Config and enter your API Key.  
     ![](imgs/config.png)
 
 ## Functions
@@ -28,14 +28,13 @@ QGIS Plugin for HERE API.
 -   Select a point layer
 -   Select a sort field (optional, default to `fid`)
 -   Select a route matching mode from car, bus, bicycle or pedestrian
--   Click OK and the trace will be added to the map canvas as a temporary layer
-
-![](imgs/dialog.png)
-![](imgs/export.png)
+-   Click OK and the trace will be added to the map canvas as a temporary layer  
+    ![](imgs/dialog.png)  
+    ![](imgs/export.png)
 
 #### Note
 
--   This plugin can help you to match the trace of a large dataset, which including more than 400 points. However, The upper limit is 10,000。
+-   This plugin can help you to match the trace of a large dataset, which including more than 400 points. However, The maximum number of points is limited up to 10,000.
 
 ---
 
