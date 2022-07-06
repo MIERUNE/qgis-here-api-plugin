@@ -1,4 +1,4 @@
-# Here Route API Plugin
+# HERE Route API Plugin
 
 QGIS Plugin for HERE API.
 
