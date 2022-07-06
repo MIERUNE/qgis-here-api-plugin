@@ -2,7 +2,7 @@ from PyQt5.QtCore import QSettings
 
 
 class SettingsManager:
-    SETTING_GROUP = "/here"
+    SETTING_GROUP = "/here-route-api-plugin"
 
     def __init__(self):
         self._settings = {"apikey": ""}

@@ -1,5 +1,5 @@
 [general]
-name=HerePlugin
+name=Here Route API Plugin
 qgisMinimumVersion=3.0
 about=QGIS Plugin for HERE-API
 description=QGIS Plugin for HERE-API

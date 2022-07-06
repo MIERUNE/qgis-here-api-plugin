@@ -10,7 +10,7 @@ from qgis.gui import *
 from .ui.routematching.dialog_routematching import DiadlogRouteMatching
 from .ui.dialog_config import DialogConfig
 
-PLUGIN_NAME = 'HERE API Plugin'
+PLUGIN_NAME = 'HERE Route API Plugin'
 
 
 class HereApiPlugin:
