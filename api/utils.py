@@ -29,19 +29,15 @@ def handle_reply(reply: QNetworkReply, as_string=False):
             return text
         return json.loads(text)
     else:
-        iface.messageBar().pushWarning("Here", "API Connection error")
-        print(reply.error())
-        print(reply.errorString())
         if reply.error() in (
             QNetworkReply.ContentAccessDenied,
             QNetworkReply.AuthenticationRequiredError,
         ):
-            raise Exception("AuthenticationError")
+            iface.messageBar().pushWarning("HERE Route API Plugin", "AuthenticationError")
         elif (
             reply.error() == QNetworkReply.HostNotFoundError
             or reply.error() == QNetworkReply.UnknownNetworkError
         ):
-            raise Exception("NetworkError")
+            iface.messageBar().pushWarning("HERE Route API Plugin", "NetworkError")
         else:
-            raise Exception(reply.errorString())
-
+            iface.messageBar().pushWarning("HERE Route API Plugin", reply.errorString())
