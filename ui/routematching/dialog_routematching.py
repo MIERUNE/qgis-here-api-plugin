@@ -76,24 +76,30 @@ class DiadlogRouteMatching(QDialog):
             # APIリクエストする
             res_list = list(map(get_request, repeat(api_para), waypoint_paras))
 
-            # APIレスポンスを処理してfeatureを作成する
-            features_for_geojson = []
-            features_list = list(map(self.generate_link_features, res_list))
-            for feature in features_list:
-                features_for_geojson.extend(feature)
+            # API取得がエラーの場合除外
+            if res_list[0] is not None:
+                # APIレスポンスを処理してfeatureを作成する
+                features_for_geojson = []
+                features_list = list(map(self.generate_link_features, res_list))
+                for feature in features_list:
+                    features_for_geojson.extend(feature)
 
-            # 各部分の起点終点をつなげる
-            start_points = list(map(lambda x: x[0]["geometry"]["coordinates"][0], features_list))
-            end_points = list(map(lambda x: x[-1]["geometry"]["coordinates"][1], features_list))
-            links = self.generate_links_from_points(start=start_points, end=end_points, part=part)
-            features_for_geojson.extend(links)
+                # 各部分の起点終点をつなげる
+                start_points = list(map(lambda x: x[0]["geometry"]["coordinates"][0], features_list))
+                end_points = list(map(lambda x: x[-1]["geometry"]["coordinates"][1], features_list))
+                links = self.generate_links_from_points(start=start_points, end=end_points, part=part)
+                features_for_geojson.extend(links)
 
-            # geojsonを作成し、QGIS上で表示する
-            geojson = self.generate_link_geojson(features_for_geojson)
-            self.show_layers(geojson)
+                # geojsonを作成し、QGIS上で表示する
+                geojson = self.generate_link_geojson(features_for_geojson)
+                self.show_layers(geojson)
 
-            # 処理完了のダイアログを表示
-            QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.Yes)
+                # 処理完了のダイアログを表示
+                QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.Yes)
+            else:
+                # 処理中断のダイアログを表示
+                QMessageBox.information(None, "Info", "Process was interrupted.", QMessageBox.Yes)
+            #ダイアログ閉じる
             self.close()
 
     def set_fields(self, layer):
