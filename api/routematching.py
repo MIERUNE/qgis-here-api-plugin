@@ -34,7 +34,7 @@ def get_request(api_para: dict, waypoint_para: str):
     eventLoop = QEventLoop()
     reply = nwa_manager.get(req)
     reply.finished.connect(eventLoop.quit)
-    eventLoop.exec_()
+    eventLoop.exec()
 
     result = handle_reply(reply)
 
