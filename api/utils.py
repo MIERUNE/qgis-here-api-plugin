@@ -21,7 +21,7 @@ def handle_reply(reply: QNetworkReply, as_string=False):
     Returns:
         dict or str
     """
-    if reply.error() == QNetworkReply.NoError:
+    if reply.error() == QNetworkReply.NetworkError.NoError:
         text_stream = QTextStream(reply)
         text_stream.setCodec("UTF-8")
         text = text_stream.readAll()
@@ -30,13 +30,13 @@ def handle_reply(reply: QNetworkReply, as_string=False):
         return json.loads(text)
     else:
         if reply.error() in (
-            QNetworkReply.ContentAccessDenied,
-            QNetworkReply.AuthenticationRequiredError,
+            QNetworkReply.NetworkError.ContentAccessDenied,
+            QNetworkReply.NetworkError.AuthenticationRequiredError,
         ):
             iface.messageBar().pushWarning("HERE Route API Plugin", "AuthenticationError")
         elif (
-            reply.error() == QNetworkReply.HostNotFoundError
-            or reply.error() == QNetworkReply.UnknownNetworkError
+            reply.error() == QNetworkReply.NetworkError.HostNotFoundError
+            or reply.error() == QNetworkReply.NetworkError.UnknownNetworkError
         ):
             iface.messageBar().pushWarning("HERE Route API Plugin", "NetworkError")
         else:
