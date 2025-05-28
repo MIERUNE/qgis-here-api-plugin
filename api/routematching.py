@@ -1,11 +1,7 @@
 # QGIS-API
-from qgis.PyQt import uic
-from qgis.core import *
-from qgis.gui import *
-from qgis.PyQt.QtCore import *
-from qgis.PyQt.QtGui import *
+from qgis.core import QgsNetworkAccessManager
+from qgis.PyQt.QtCore import QUrl, QEventLoop
 from qgis.PyQt.QtNetwork import QNetworkRequest
-from qgis.PyQt.QtWidgets import *
 
 from .utils import handle_reply
 
