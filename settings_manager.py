@@ -1,4 +1,4 @@
-from PyQt5.QtCore import QSettings
+from qgis.PyQt.QtCore import QSettings
 
 
 class SettingsManager:

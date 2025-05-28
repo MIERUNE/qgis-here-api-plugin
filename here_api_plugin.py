@@ -1,11 +1,11 @@
 import os
 
 # QGIS-API
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
 from qgis.core import *
 from qgis.gui import *
+from qgis.PyQt.QtCore import *
+from qgis.PyQt.QtGui import *
+from qgis.PyQt.QtWidgets import *
 
 from .ui.routematching.dialog_routematching import DiadlogRouteMatching
 from .ui.dialog_config import DialogConfig
@@ -70,8 +70,8 @@ class HereApiPlugin:
 
     def show_dialog_main(self):
         self.dialog_main = DiadlogRouteMatching()
-        self.dialog_main.exec_()
+        self.dialog_main.exec()
 
     def show_dialog_config(self):
         self.dialog_config = DialogConfig()
-        self.dialog_config.exec_()
+        self.dialog_config.exec()
