@@ -96,10 +96,10 @@ class DiadlogRouteMatching(QDialog):
                 self.show_layers(geojson)
 
                 # 処理完了のダイアログを表示
-                QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.Yes)
+                QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.StandardButton.Yes)
             else:
                 # 処理中断のダイアログを表示
-                QMessageBox.information(None, "Info", "Process was interrupted.", QMessageBox.Yes)
+                QMessageBox.information(None, "Info", "Process was interrupted.", QMessageBox.StandardButton.Yes)
             #ダイアログ閉じる
             self.close()
 
@@ -110,7 +110,7 @@ class DiadlogRouteMatching(QDialog):
         input_lyr = self.ui.mMapLayerComboBox.currentLayer()
         # レイヤが選択されている確認
         if input_lyr is None:
-            QMessageBox.information(None, "Info", "Layer is not selected.", QMessageBox.Yes)
+            QMessageBox.information(None, "Info", "Layer is not selected.", QMessageBox.StandardButton.Yes)
             return
         else:
             return input_lyr
