@@ -1,11 +1,7 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtNetwork import QNetworkRequest
-from PyQt5.QtWidgets import *
 # QGIS-API
-from qgis.PyQt import uic
-from qgis.core import *
-from qgis.gui import *
+from qgis.core import QgsNetworkAccessManager
+from qgis.PyQt.QtCore import QUrl, QEventLoop
+from qgis.PyQt.QtNetwork import QNetworkRequest
 
 from .utils import handle_reply
 
@@ -34,7 +30,7 @@ def get_request(api_para: dict, waypoint_para: str):
     eventLoop = QEventLoop()
     reply = nwa_manager.get(req)
     reply.finished.connect(eventLoop.quit)
-    eventLoop.exec_()
+    eventLoop.exec()
 
     result = handle_reply(reply)
 

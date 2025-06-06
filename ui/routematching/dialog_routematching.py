@@ -1,13 +1,11 @@
 import json
 import os
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtNetwork import QNetworkRequest
-from PyQt5.QtWidgets import *
+
 # QGIS-API
 from qgis.PyQt import uic
-from qgis.core import *
-from qgis.gui import *
+from qgis.core import QgsProject, QgsVectorLayer, QgsMapLayerProxyModel
+from qgis.PyQt.QtGui import QColor
+from qgis.PyQt.QtWidgets import QDialog, QMessageBox
 
 from ...settings_manager import SettingsManager
 from ...api.routematching import get_request
@@ -95,10 +93,10 @@ class DiadlogRouteMatching(QDialog):
                 self.show_layers(geojson)
 
                 # 処理完了のダイアログを表示
-                QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.Yes)
+                QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.StandardButton.Yes)
             else:
                 # 処理中断のダイアログを表示
-                QMessageBox.information(None, "Info", "Process was interrupted.", QMessageBox.Yes)
+                QMessageBox.information(None, "Info", "Process was interrupted.", QMessageBox.StandardButton.Yes)
             #ダイアログ閉じる
             self.close()
 
@@ -109,7 +107,7 @@ class DiadlogRouteMatching(QDialog):
         input_lyr = self.ui.mMapLayerComboBox.currentLayer()
         # レイヤが選択されている確認
         if input_lyr is None:
-            QMessageBox.information(None, "Info", "Layer is not selected.", QMessageBox.Yes)
+            QMessageBox.information(None, "Info", "Layer is not selected.", QMessageBox.StandardButton.Yes)
             return
         else:
             return input_lyr

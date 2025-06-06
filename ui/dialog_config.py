@@ -1,13 +1,8 @@
 import os
 
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from qgis.core import *
-from qgis.gui import *
-
 # QGIS-API
 from qgis.PyQt import uic
+from qgis.PyQt.QtWidgets import QDialog
 
 from ..settings_manager import SettingsManager
 
