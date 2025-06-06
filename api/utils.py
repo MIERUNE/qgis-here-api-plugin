@@ -17,10 +17,11 @@ def handle_reply(reply: QNetworkReply, as_string=False):
     Returns:
         dict or str
     """
+
     if reply.error() == QNetworkReply.NetworkError.NoError:
-        text_stream = QTextStream(reply)
-        text_stream.setCodec("UTF-8")
-        text = text_stream.readAll()
+        data = reply.readAll()
+        text = bytes(data).decode("utf-8")
+
         if as_string:
             return text
         return json.loads(text)

@@ -1,0 +1,42 @@
+name: export_plugin
+on:
+  release:
+    types: [published]
+
+env:
+  PLUGIN_NAME: qgis-here-api-plugin
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Temporarily rename metadata file whose contents are to be rewritten
+      - name: rename some files to rewrite
+        run: |
+          cp ./metadata.txt ./metadata.old.txt
+      # Write version information in metadata.txt from github release tag
+      - name: metadata
+        run : |
+          sed -e "s/version={{PLUGIN_VERSION}}/version=${{ github.event.release.tag_name }}/g" ./metadata.old.txt > ./metadata.txt
+          rm ./metadata.old.txt
+      - name: Create Plugin Directory
+        run: |
+          mkdir ${{env.PLUGIN_NAME}}
+          find . -type f | grep -ve './.git' \
+            -ve '.github' \
+            -ve './.vscode' \
+            -ve '__pycache__/' \
+            -ve './tests' \
+            -ve './pyproject.toml' \
+            -ve './.gitignore' \
+            -ve './.python-version' \
+            -ve './README.md' \
+            -ve './uv.lock' | xargs -I src cp --parents src ${{env.PLUGIN_NAME}}
+      - name: Create Archive
+        run: |
+          zip -r ${{env.PLUGIN_NAME}}.zip ./${{env.PLUGIN_NAME}}
+      - name: Upload release asset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ github.event.release.tag_name }} ${{env.PLUGIN_NAME}}.zip#${{env.PLUGIN_NAME}}
