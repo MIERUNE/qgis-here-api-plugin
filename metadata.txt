@@ -3,7 +3,7 @@ name=Here Route API Plugin
 qgisMinimumVersion=3.0
 about=QGIS Plugin for HERE-API
 description=QGIS Plugin for HERE-API
-version=1.2
+version={{PLUGIN_VERSION}}
 supportsQt6=True
 
 #Plugin main icon
