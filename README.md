@@ -29,12 +29,14 @@ QGIS Plugin for HERE API.
 
 - From the menu bar, Select Plugin -> HERE API Plugin -> Route Matching.
     - Or click on the Plugin icon from the plugin toolbar
+
 ![menu](imgs/menu.png)  
 
 - Select a point layer.  
 - Select a sort field. (optional, default to `fid`)  
 - Select a route matching mode from car, bus, bicycle or pedestrian.  
 - Click OK and the trace will be added to the map canvas as a temporary layer.  
+
 ![dialog](imgs/dialog.png)  
 ![export](imgs/export.png)  
 
