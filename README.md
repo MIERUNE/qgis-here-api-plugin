@@ -27,7 +27,10 @@ QGIS Plugin for HERE API.
 
 #### Usage
 
-- Select Plugin -> HERE API Plugin -> Route Matching from the menu bar.  
+- From the menu bar, Select Plugin -> HERE API Plugin -> Route Matching.
+    - Or click on the Plugin icon from the plugin toolbar
+![menu](imgs/menu.png)  
+
 - Select a point layer.  
 - Select a sort field. (optional, default to `fid`)  
 - Select a route matching mode from car, bus, bicycle or pedestrian.  
