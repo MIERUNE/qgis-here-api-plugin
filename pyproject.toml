@@ -1,0 +1,15 @@
+[project]
+name = "qgis-here-api"
+version = "0.1.0"
+description = "Use HERE route API to convert HPS log data to route"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "pyqt5-stubs>=5.15.6.0",
+    "ruff>=0.8.2",
+]
+[tool.ruff.lint]
+ignore = ["F401"]
