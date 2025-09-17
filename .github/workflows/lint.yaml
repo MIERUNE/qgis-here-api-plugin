@@ -4,9 +4,12 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+
 jobs:
   Test:
     name: Lint
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
