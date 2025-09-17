@@ -6,6 +6,7 @@ from qgis.PyQt.QtWidgets import QDialog
 
 from ..settings_manager import SettingsManager
 
+
 # uiファイルの定義と同じクラスを継承する
 class DialogConfig(QDialog):
     def __init__(self):

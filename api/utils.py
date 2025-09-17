@@ -30,7 +30,9 @@ def handle_reply(reply: QNetworkReply, as_string=False):
             QNetworkReply.NetworkError.ContentAccessDenied,
             QNetworkReply.NetworkError.AuthenticationRequiredError,
         ):
-            iface.messageBar().pushWarning("HERE Route API Plugin", "AuthenticationError")
+            iface.messageBar().pushWarning(
+                "HERE Route API Plugin", "AuthenticationError"
+            )
         elif (
             reply.error() == QNetworkReply.NetworkError.HostNotFoundError
             or reply.error() == QNetworkReply.NetworkError.UnknownNetworkError
