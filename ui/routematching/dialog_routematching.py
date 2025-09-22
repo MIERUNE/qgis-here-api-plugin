@@ -20,8 +20,9 @@ PNUM_MAX = 10000
 class DiadlogRouteMatching(QDialog):
     def __init__(self):
         super().__init__()
-        self.ui = uic.loadUi(os.path.join(os.path.dirname(
-            __file__), 'dialog_routematching.ui'), self)
+        self.ui = uic.loadUi(
+            os.path.join(os.path.dirname(__file__), "dialog_routematching.ui"), self
+        )
 
         self.ui.pushButton_run.clicked.connect(self.process_res)
         self.ui.pushButton_cancel.clicked.connect(self.close)
@@ -45,7 +46,9 @@ class DiadlogRouteMatching(QDialog):
             pcount = cur_lyr.featureCount()
             if pcount > PNUM_MAX:
                 self.ui.mMapLayerComboBox.setLayer(None)
-                QMessageBox.information(None, "Error", f"The processing limit is {PNUM_MAX} points.")
+                QMessageBox.information(
+                    None, "Error", f"The processing limit is {PNUM_MAX} points."
+                )
 
     def process_res(self):
         # インプットフィチャーを取得する
@@ -68,8 +71,16 @@ class DiadlogRouteMatching(QDialog):
             part = -(-len(waypoints) // PNUM_PART)
 
             # 入力レイヤを分割して複数のURLを作成する
-            waypoint_list_per_part = list(map(self.generate_perpart_waypoints, range(1, part + 1), repeat(waypoints)))
-            waypoint_paras = list(map(self.generate_waypoint_para, waypoint_list_per_part))
+            waypoint_list_per_part = list(
+                map(
+                    self.generate_perpart_waypoints,
+                    range(1, part + 1),
+                    repeat(waypoints),
+                )
+            )
+            waypoint_paras = list(
+                map(self.generate_waypoint_para, waypoint_list_per_part)
+            )
 
             # APIリクエストする
             res_list = list(map(get_request, repeat(api_para), waypoint_paras))
@@ -83,9 +94,15 @@ class DiadlogRouteMatching(QDialog):
                     features_for_geojson.extend(feature)
 
                 # 各部分の起点終点をつなげる
-                start_points = list(map(lambda x: x[0]["geometry"]["coordinates"][0], features_list))
-                end_points = list(map(lambda x: x[-1]["geometry"]["coordinates"][1], features_list))
-                links = self.generate_links_from_points(start=start_points, end=end_points, part=part)
+                start_points = list(
+                    map(lambda x: x[0]["geometry"]["coordinates"][0], features_list)
+                )
+                end_points = list(
+                    map(lambda x: x[-1]["geometry"]["coordinates"][1], features_list)
+                )
+                links = self.generate_links_from_points(
+                    start=start_points, end=end_points, part=part
+                )
                 features_for_geojson.extend(links)
 
                 # geojsonを作成し、QGIS上で表示する
@@ -93,11 +110,18 @@ class DiadlogRouteMatching(QDialog):
                 self.show_layers(geojson)
 
                 # 処理完了のダイアログを表示
-                QMessageBox.information(None, "Info", "Process is complete.", QMessageBox.StandardButton.Yes)
+                QMessageBox.information(
+                    None, "Info", "Process is complete.", QMessageBox.StandardButton.Yes
+                )
             else:
                 # 処理中断のダイアログを表示
-                QMessageBox.information(None, "Info", "Process was interrupted.", QMessageBox.StandardButton.Yes)
-            #ダイアログ閉じる
+                QMessageBox.information(
+                    None,
+                    "Info",
+                    "Process was interrupted.",
+                    QMessageBox.StandardButton.Yes,
+                )
+            # ダイアログ閉じる
             self.close()
 
     def set_fields(self, layer):
@@ -107,7 +131,9 @@ class DiadlogRouteMatching(QDialog):
         input_lyr = self.ui.mMapLayerComboBox.currentLayer()
         # レイヤが選択されている確認
         if input_lyr is None:
-            QMessageBox.information(None, "Info", "Layer is not selected.", QMessageBox.StandardButton.Yes)
+            QMessageBox.information(
+                None, "Info", "Layer is not selected.", QMessageBox.StandardButton.Yes
+            )
             return
         else:
             return input_lyr
@@ -117,12 +143,10 @@ class DiadlogRouteMatching(QDialog):
         return False if sort_field == "" else sort_field
 
     def get_input_features(self, input_lyr, sort_field):
-        if sort_field == False:
+        if not sort_field:
             result = list(input_lyr.getFeatures())
         else:
-            result = sorted(
-                list(input_lyr.getFeatures()), key=lambda f: f[sort_field]
-            )
+            result = sorted(list(input_lyr.getFeatures()), key=lambda f: f[sort_field])
         return result
 
     def get_mode(self):
@@ -138,9 +162,12 @@ class DiadlogRouteMatching(QDialog):
         return result
 
     def generate_waypoint_list(self, input_features):
-        result = list(map(lambda feature:
-                          f"{feature.geometry().asPoint().y()},{feature.geometry().asPoint().x()}",
-                          input_features))
+        result = list(
+            map(
+                lambda feature: f"{feature.geometry().asPoint().y()},{feature.geometry().asPoint().x()}",
+                input_features,
+            )
+        )
         return result
 
     def generate_waypoint_para(self, waypoints: dict) -> str:
@@ -152,7 +179,9 @@ class DiadlogRouteMatching(QDialog):
         Returns:
             str: リクエストパラメタ
         """
-        waypoint_para = "&".join(list(map(lambda x: f"{x}={waypoints[x]}", waypoints.keys())))
+        waypoint_para = "&".join(
+            list(map(lambda x: f"{x}={waypoints[x]}", waypoints.keys()))
+        )
         return waypoint_para
 
     def generate_perpart_waypoints(self, i: int, waypoints: list) -> list:
@@ -190,20 +219,13 @@ class DiadlogRouteMatching(QDialog):
             coordinates = []
             shape = link.get("shape", [])
             for i in range(len(shape) // 2):
-                coordinates.append(
-                    (shape[2 * i + 1], shape[2 * i])
-                )
+                coordinates.append((shape[2 * i + 1], shape[2 * i]))
             # make geojson-feature
-            feature = {"type": "Feature",
-                       "properties": {
-                           "linkId": link["linkId"],
-                           "length": link["length"]
-                       },
-                       "geometry": {
-                           "coordinates": coordinates,
-                           "type": "LineString"
-                       }
-                       }
+            feature = {
+                "type": "Feature",
+                "properties": {"linkId": link["linkId"], "length": link["length"]},
+                "geometry": {"coordinates": coordinates, "type": "LineString"},
+            }
             features.append(feature)
 
         return features
@@ -219,22 +241,21 @@ class DiadlogRouteMatching(QDialog):
             list: geojsonフィーチャー
         """
         start_points = start[1:part]
-        end_points = end[0:part - 1]
+        end_points = end[0 : part - 1]
 
-        features = list(map(lambda x: {"type": "Feature",
-                                       "properties": {
-                                           "linkId": "",
-                                           "length": ""
-                                       },
-                                       "geometry": {
-                                           "coordinates": [
-                                               start_points[x],
-                                               end_points[x]
-                                           ],
-                                           "type": "LineString"
-                                       }
-                                       },
-                            list(range(0, part - 1))))
+        features = list(
+            map(
+                lambda x: {
+                    "type": "Feature",
+                    "properties": {"linkId": "", "length": ""},
+                    "geometry": {
+                        "coordinates": [start_points[x], end_points[x]],
+                        "type": "LineString",
+                    },
+                },
+                list(range(0, part - 1)),
+            )
+        )
 
         return features
 
@@ -272,5 +293,5 @@ class DiadlogRouteMatching(QDialog):
             str: ユーザが入力したAPIキー
         """
         smanager = SettingsManager()
-        apikey = smanager.get_setting('apikey')
+        apikey = smanager.get_setting("apikey")
         return apikey
